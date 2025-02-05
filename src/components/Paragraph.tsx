@@ -10,7 +10,7 @@ export const Paragraph = ({
 }: BlockAttributes) => {
   return (
     <p
-      className={`max-w-5xl mx-auto mt-2 text-[24px] text-gray-200 ${getTextAlign(textAlign as TextAlign)}`}
+      className={`max-w-5xl mx-auto mt-2 text-[24px] text-gray-300 ${getTextAlign(textAlign as TextAlign)}`}
       style={{ color: textColor as string }}
       dangerouslySetInnerHTML={{ __html: relativeToAbsoluteUrls(content) }}
     />

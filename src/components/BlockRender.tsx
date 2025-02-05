@@ -4,9 +4,9 @@ import { Heading } from './Heading';
 import { Block } from '@/utils/cleanAndTransformBlocks';
 import { TextAlign } from '@/utils/fonts';
 import { theme } from '../../theme';
-// import CallToActionButton from '../UI/CallToActionButton';
+import CallToActionButton from './ui/CallToActionButton';
 // import { Columns } from '../Columns/Columns';
-// import { Column } from '../Column/Column';
+import { Column } from './Column';
 // import Image from 'next/image';
 // import { PropertySearch } from '../PropertySearch/PropertySearch';
 // import { FormspreeForm } from '../FormspreeForm/FormspreeForm';
@@ -55,7 +55,6 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
       //     return <PropertySearch key={block.id} />;
       //   }
       case 'core/cover':
-        console.log(block);
         return (
           <Cover key={block.id} background={block.attributes?.url as string}>
             <BlockRenderer blocks={block.innerBlocks || []} />
@@ -88,24 +87,21 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
           />
         );
       }
-      //   case 'core/buttons': {
-      //     return (
-      //       <div key={block.id} className="buttons-container">
-      //         {block.innerBlocks?.map((innerBlock) => {
-      //           const justifyContent =
-      //             block.attributes?.layout?.justifyContent || 'center';
-      //           return (
-      //             <CallToActionButton
-      //               key={innerBlock.id}
-      //               content={innerBlock.attributes?.content as string}
-      //               url={innerBlock.attributes?.url as string}
-      //               justifyContent={justifyContent as 'left' | 'center' | 'right'}
-      //             />
-      //           );
-      //         })}
-      //       </div>
-      //     );
-      //   }
+      case 'core/buttons': {
+        return (
+          <div key={block.id} className="buttons-container">
+            {block.innerBlocks?.map((innerBlock) => {
+              return (
+                <CallToActionButton
+                  key={innerBlock.id}
+                  content={innerBlock.attributes?.content as string}
+                  url={innerBlock.attributes?.url as string}
+                />
+              );
+            })}
+          </div>
+        );
+      }
       //   case 'core/columns': {
       //     return (
       //       <Columns
@@ -126,26 +122,26 @@ export const BlockRenderer = ({ blocks }: BlockRendererProps) => {
       //       </Columns>
       //     );
       //   }
-      //   case 'core/column': {
-      //     return (
-      //       <Column
-      //         key={block.id}
-      //         width={block.attributes?.width as string}
-      //         textColor={
-      //           theme[block.attributes?.textColor as keyof typeof theme] ||
-      //           block.attributes?.style?.color?.text ||
-      //           ''
-      //         }
-      //         backgroundColor={
-      //           theme[block.attributes?.backgroundColor as keyof typeof theme] ||
-      //           block.attributes?.style?.color?.background ||
-      //           ''
-      //         }
-      //       >
-      //         <BlockRenderer blocks={block.innerBlocks || []} />
-      //       </Column>
-      //     );
-      //   }
+      case 'core/column': {
+        return (
+          <Column
+            key={block.id}
+            width={block.attributes?.width as string}
+            textColor={
+              theme[block.attributes?.textColor as keyof typeof theme] ||
+              block.attributes?.style?.color?.text ||
+              ''
+            }
+            backgroundColor={
+              theme[block.attributes?.backgroundColor as keyof typeof theme] ||
+              block.attributes?.style?.color?.background ||
+              ''
+            }
+          >
+            <BlockRenderer blocks={block.innerBlocks || []} />
+          </Column>
+        );
+      }
       //   case 'core/group':
       //   case 'core/block': {
       //     return (

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins, Aboreto } from 'next/font/google';
 import './globals.css';
 import ApolloProviderWrapper from '@/Providers/ApolloProvider';
+import Header from '@/components/Header/Header';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -30,7 +31,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} ${aboreto.variable}`}>
-        <ApolloProviderWrapper>{children}</ApolloProviderWrapper>
+        <ApolloProviderWrapper>
+          <Header />
+          {children}
+        </ApolloProviderWrapper>
       </body>
     </html>
   );

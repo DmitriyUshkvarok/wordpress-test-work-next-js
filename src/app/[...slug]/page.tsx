@@ -1,28 +1,8 @@
-import { gql } from '@apollo/client';
 import { getClient } from '@/lib/client';
 import { notFound } from 'next/navigation';
 import { BlockRenderer } from '@/components/BlockRender';
 import { cleanAndTransformBlocks } from '@/utils/cleanAndTransformBlocks';
-
-const GET_PAGE_BY_URI = gql`
-  query GetPageByUri($uri: String!) {
-    pageBy(uri: $uri) {
-      id
-      title
-      blocks(postTemplate: false)
-    }
-  }
-`;
-
-const GET_ALL_PAGES = gql`
-  query AllPagesQuery {
-    pages {
-      nodes {
-        uri
-      }
-    }
-  }
-`;
+import { GET_PAGE_BY_URI, GET_ALL_PAGES } from '@/graphql/services';
 
 const client = getClient();
 const { data } = await client.query({ query: GET_ALL_PAGES });
@@ -66,7 +46,6 @@ export default async function Page({
   params: Promise<{ slug: string[] }>;
 }) {
   const { slug } = await params;
-  console.log('slug', slug);
   const uri = `/${slug.join('/')}/`;
 
   const client = getClient();
